@@ -1,0 +1,47 @@
+.container-login {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+
+  .container-form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+    width: 100%;
+    padding: 40px;
+    background-color: #1e1e1e;
+    max-width: 400px;
+    border-radius: 10px;
+  }
+}
+
+.formulario-login {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 30px;
+  width: 100%;
+
+  input {
+    width: 100%;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    font-size: 20px;
+  }
+
+  button {
+    width: 100%;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    font-size: 20px;
+    background-color: #007bff;
+    color: #fff;
+    cursor: pointer;
+  }
+}

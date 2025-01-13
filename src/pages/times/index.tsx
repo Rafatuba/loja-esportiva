@@ -3,7 +3,7 @@ import Header from "../../components/header";
 import { api } from "../../services/api";
 import { useAuth } from "../../hooks/useAuth";
 import "./times-style.css";
-import { useNavigate } from "react-router";
+import { useNavigate, Link } from "react-router";
 
 interface Data {
   name: string;
@@ -51,10 +51,12 @@ export default function Times() {
             <h3>Carregando...</h3>
           ) : (
             times.map((time) => (
-              <div className="times-card" key={time._id}>
-                <img src={time.image} alt={time.name} />
-                <h2>{time.name}</h2>
-              </div>
+              <Link to={`/products/${time._id}`}>
+                <div className="times-card" key={time._id}>
+                  <img src={time.image} alt={time.name} />
+                  <h2>{time.name}</h2>
+                </div>
+              </Link>
             ))
           )}
         </div>

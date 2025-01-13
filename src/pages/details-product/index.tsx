@@ -45,6 +45,7 @@ export default function DetailsProduct() {
 
   useEffect(() => {
     getProducts();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {

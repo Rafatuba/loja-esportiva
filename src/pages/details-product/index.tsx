@@ -1,9 +1,9 @@
-import { Link, useNavigate, useParams } from "react-router";
+import { useNavigate, useParams } from "react-router";
 import Header from "../../components/header";
 import { api } from "../../services/api";
-import { useEffect, useState } from "react";
 import { useAuth } from "../../hooks/useAuth";
-import "./products-style.css";
+import { useEffect, useState } from "react";
+import "./detail-style.css";
 
 interface Data {
   available: boolean;
@@ -11,28 +11,29 @@ interface Data {
   price: number;
   _id: string;
   categoryId: string;
-  decsription: string;
+  description: string;
   urlImage: string;
+  maker: string;
 }
 
-export default function Products() {
+export default function DetailsProduct() {
   const { id } = useParams();
   const { token } = useAuth();
 
-  const [products, setProducts] = useState<Data[]>([]);
-
-  const [isLoading, setIsLoading] = useState(true);
-
   const navigate = useNavigate();
+
+  const [product, setProduct] = useState({} as Data);
+  const [isLoading, setIsLoading] = useState(true);
 
   async function getProducts() {
     try {
-      const response = await api.get<Data[]>(`/products/${id}`, {
+      const response = await api.get<Data>(`/product/${id}`, {
         headers: {
           Authorization: token,
         },
       });
-      setProducts(response.data);
+      setProduct(response.data);
+      console.log(response.data);
     } catch (error) {
       if (token) {
         console.log("Erro ao buscar produtos", error);
@@ -44,7 +45,6 @@ export default function Products() {
 
   useEffect(() => {
     getProducts();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
@@ -57,21 +57,17 @@ export default function Products() {
   return (
     <div>
       <Header />
-      <h1>Itens do time</h1>
+      <h1>Detalhes do produto</h1>
 
       {isLoading && <h3>Carregando...</h3>}
-
-      {products.length < 1 && !isLoading && <h3>Nenhum produto encontrado!</h3>}
-      <div className="products-container">
-        {products.map((product) => (
-          <Link to={`/details/${product._id}`}>
-            <div key={product._id} className="products-card">
-              <h3>{product.name}</h3>
-              <p>{product.price}</p>
-              <img src={product.urlImage} alt="" />
-            </div>
-          </Link>
-        ))}
+      <div key={product._id} className="produto-container">
+        <img src={product.urlImage} alt={product.name} />
+        <div className="produto-info">
+          <h2>{product.name}</h2>
+          <p>{product.maker}</p>
+          <p>R$: {product.price}</p>
+          <p>{product.description}</p>
+        </div>
       </div>
     </div>
   );
